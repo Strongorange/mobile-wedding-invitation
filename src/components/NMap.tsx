@@ -45,6 +45,8 @@ const NMap = () => {
     const mapOptions: naver.maps.MapOptions = {
       center: CENTER,
       zoom,
+      logoControl: false,
+      scaleControl: false,
     };
 
     mapRef.current = new window.naver.maps.Map("map", mapOptions);
