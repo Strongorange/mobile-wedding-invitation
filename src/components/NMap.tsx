@@ -6,6 +6,49 @@ import React, { useRef } from "react";
 const NMap = () => {
   const mapRef = useRef<NaverMap | null>(null);
 
+  const openNaverMapLocation = () => {
+    const lat = 37.521753;
+    const lng = 126.919335;
+    const name = encodeURIComponent("여의도웨딩컨벤션");
+
+    // 지도 보기 URL
+    const mapUrl = `nmap://place?lat=${lat}&lng=${lng}&name=${name}&appname=${process.env.NEXT_PUBLIC_APP_NAME}`;
+
+    // 모바일 기기 확인
+    const isMobile =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent,
+      );
+
+    if (isMobile) {
+      window.location.href = mapUrl;
+    } else {
+      // PC에서는 네이버 지도 웹으로 이동
+      window.open(`https://map.naver.com/v5/search/${name}`);
+    }
+  };
+
+  const openNaverMapNavi = () => {
+    const lat = 37.521753;
+    const lng = 126.919335;
+    const name = encodeURIComponent("여의도웨딩컨벤션");
+
+    // 길찾기 URL (현재 위치에서 목적지까지)
+    const directionUrl = `nmap://route/car?dlat=${lat}&dlng=${lng}&dname=${name}&appname=${process.env.NEXT_PUBLIC_APP_NAME}`;
+
+    const isMobile =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent,
+      );
+
+    if (isMobile) {
+      window.location.href = directionUrl;
+    } else {
+      // PC에서는 네이버 지도 길찾기로 이동
+      window.open(`https://map.naver.com/v5/directions/${lat},${lng},${name}`);
+    }
+  };
+
   const createMarker = (position: naver.maps.LatLng) => {
     if (!mapRef || !mapRef.current) return;
     const marker = new naver.maps.Marker({
@@ -62,7 +105,17 @@ const NMap = () => {
         src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NCP_CLIENT_ID}`}
         onReady={initMap}
       />
-      <div id="map" className="h-[80dvw] w-[80vw] bg-yellow-300"></div>
+      <div>
+        <div id="map" className="h-[80dvw] w-[80vw] bg-yellow-300"></div>
+        <div className="flex w-full items-center gap-2">
+          <button onClick={openNaverMapNavi}>
+            <p>길찾기</p>
+          </button>
+          <button onClick={openNaverMapLocation}>
+            <p>지도보기</p>
+          </button>
+        </div>
+      </div>
     </>
   );
 };
