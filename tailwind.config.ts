@@ -11,6 +11,12 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        text: {
+          base: "#5F5F5F",
+        },
+      },
+      fontFamily: {
+        notokr: ["var(--font-noto-serif-kr)", "sans-serif"],
       },
     },
   },
