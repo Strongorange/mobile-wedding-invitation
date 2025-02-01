@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const First = () => {
   return (
-    <section className="font-notokr text-text-base flex h-[100vh] w-full flex-col items-center justify-between gap-8 bg-white px-[1.25rem] py-[10vh] pb-[15vh]">
+    <section className="flex h-[100vh] w-full flex-col items-center justify-between gap-8 bg-white px-[1.25rem] py-[10vh] pb-[15vh] font-notokr text-text-base">
       <div className="title-section flex w-full flex-col items-center">
         <h1 className="text-[2rem] font-medium tracking-[0.3em]">결혼합니다</h1>
         <h3 className="text-[1.25rem] tracking-[0.1em]">찬휘와 혜진</h3>
@@ -24,7 +24,7 @@ const First = () => {
 
       <div className="time-location-section flex w-full flex-col items-center gap-2">
         <p className="text-[1.18rem]">2025.05.25 SAT PM 1:10</p>
-        <p className="text-[0.93rem]">여의도웨딩컨벤션 단독홀</p>
+        <p className="text-[0.93rem]">여의도웨딩컨벤션 3층 단독홀</p>
       </div>
     </section>
   );

@@ -2,7 +2,12 @@
 import { NaverMap } from "@/types/namp";
 import Script from "next/script";
 import React, { useRef } from "react";
-import { IoBusOutline, IoTrainOutline, IoCarOutline } from "react-icons/io5";
+import {
+  IoBusOutline,
+  IoTrainOutline,
+  IoCarOutline,
+  IoClipboardOutline,
+} from "react-icons/io5";
 
 const NMap = () => {
   const mapRef = useRef<NaverMap | null>(null);
@@ -98,6 +103,16 @@ const NMap = () => {
     createMarker(CENTER);
   };
 
+  const copyAddressToClipboard = async () => {
+    const address = "서울특별시 영등포구 여의대로 14 KT빌딩";
+    try {
+      await navigator.clipboard.writeText(address);
+      alert("복사되었습니다");
+    } catch (error) {
+      console.error("복사 실패", error);
+    }
+  };
+
   return (
     <>
       <Script
@@ -106,47 +121,94 @@ const NMap = () => {
         src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NCP_CLIENT_ID}`}
         onReady={initMap}
       />
-      <section className="font-notokr text-text-base flex h-screen w-full flex-col items-center justify-center gap-8 bg-blue-200 p-5">
+      <section className="flex w-full flex-col items-center justify-center gap-8 bg-blue-200 p-5 font-notokr text-sm text-text-base">
         <h1>LOCATION</h1>
-        <div id="map" className="h-[90dvw] w-[80vw] bg-yellow-300"></div>
+        <div className="address flex w-full flex-col items-center">
+          <div className="flex items-center gap-2">
+            <p className="text-text-base">
+              서울특별시 영등포구 여의대로 14 KT빌딩
+            </p>
+            <IoClipboardOutline onClick={() => copyAddressToClipboard()} />
+          </div>
+        </div>
+        <div
+          id="map"
+          className="h-[90dvw] w-[100vw] max-w-[450px] bg-yellow-300"
+        ></div>
 
-        <div className="flex w-full items-center gap-2 bg-green-300">
+        <div className="flex w-full items-center gap-2">
           <button onClick={openNaverMapNavi}>
-            <p>길찾기</p>
+            <div className="flex items-center justify-center rounded-xl bg-white p-4">
+              <p>길찾기</p>
+            </div>
           </button>
           <button onClick={openNaverMapLocation}>
-            <p>지도보기</p>
+            <div className="flex items-center justify-center rounded-xl bg-white p-4">
+              <p>지도보기</p>
+            </div>
           </button>
         </div>
 
         <div className="way-to-come flex w-full flex-col gap-4">
-          <div className="way-bus flex items-center gap-3">
-            <div className="way-icon-bus flex aspect-square h-full items-center justify-center rounded-[50%] bg-[#979797]">
-              <IoBusOutline size={26} color="#ffffff" />
+          <div className="h-[1px] w-full bg-black" />
+
+          <div className="way-bus flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <div className="way-icon-bus flex aspect-square w-7 shrink-0 items-center justify-center rounded-[50%] bg-[#979797]">
+                <IoBusOutline size={18} color="#ffffff" />
+              </div>
+              <p>버스</p>
             </div>
             <div className="way-texts-bus flex flex-col">
-              <p>버스 이용시</p>
-              <p>- 미리역 앞 : 111, 111</p>
+              <p>한국경제인협회 정류장 하차</p>
+              <p>(정류장번호 : 19161)</p>
             </div>
           </div>
 
-          <div className="way-train flex items-center gap-3">
-            <div className="way-icon-train flex aspect-square h-full items-center justify-center rounded-[50%] bg-[#979797]">
-              <IoTrainOutline size={26} color="#ffffff" />
+          <div className="h-[1px] w-full bg-black" />
+
+          <div className="way-train flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <div className="way-icon-bus flex aspect-square w-7 shrink-0 items-center justify-center rounded-[50%] bg-[#979797]">
+                <IoTrainOutline size={18} color="#ffffff" />
+              </div>
+              <p>지하철</p>
             </div>
-            <div className="way-texts-train flex flex-col">
-              <p>지하철 이용시</p>
-              <p>- 미리역 앞 : 111, 111</p>
+            <div className="way-texts-bus flex flex-col">
+              <p>5호선 · 9호선 여의도역 - 1번 출구</p>
             </div>
           </div>
 
-          <div className="way-car flex items-center gap-3">
-            <div className="way-icon-car flex aspect-square h-full items-center justify-center rounded-[50%] bg-[#979797]">
-              <IoCarOutline size={26} color="#ffffff" />
+          <div className="h-[1px] w-full bg-black" />
+
+          <div className="way-car flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <div className="way-icon-bus flex aspect-square w-7 shrink-0 items-center justify-center rounded-[50%] bg-[#979797]">
+                <IoCarOutline size={18} color="#ffffff" />
+              </div>
+              <p>승용차</p>
             </div>
-            <div className="way-texts-car flex flex-col">
-              <p>승용차 이용시</p>
-              <p>- 미리역 앞 : 111, 111</p>
+            <div className="way-texts-bus flex flex-col">
+              <p>
+                네비게이션 : 여의도웨딩컨벤션 또는 여의도KT 또는 여의대로14 입력
+              </p>
+              <p>
+                주차장 안내 : KT빌딩 주차장 이용 주차요원의 안내를 받으세요.
+              </p>
+            </div>
+          </div>
+
+          <div className="h-[1px] w-full bg-black" />
+
+          <div className="way-rent-bus flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <div className="way-icon-bus flex aspect-square w-7 shrink-0 items-center justify-center rounded-[50%] bg-[#979797]">
+                <IoBusOutline size={18} color="#ffffff" />
+              </div>
+              <p>전세 버스</p>
+            </div>
+            <div className="way-texts-bus flex flex-col">
+              <p>군산 - 여의도웨딩컨벤션</p>
             </div>
           </div>
         </div>

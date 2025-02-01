@@ -10,8 +10,8 @@ import NMap from "@/components/NMap";
 
 export default function Home() {
   return (
-    <div className="">
-      <main className="">
+    <div className="flex w-full justify-center">
+      <main className="w-full max-w-[450px]">
         <First />
         <Intro />
         <Calendar />
